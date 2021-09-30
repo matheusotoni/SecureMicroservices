@@ -16,11 +16,8 @@ namespace IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentityServer()
-                .AddInMemoryClients(Config.Clients)
-                .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryApiResources(Config.ApiResources)
+                .AddInMemoryClients(Config.Clients)                
                 .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddTestUsers(Config.TestUsers)
                 .AddDeveloperSigningCredential();
         }
 
