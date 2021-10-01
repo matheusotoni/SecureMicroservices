@@ -37,13 +37,14 @@ namespace Movies.Client
 
                     options.ClientId = "movies_mvc_client";
                     options.ClientSecret = "secret";
-                    options.ResponseType = "code id_token";
+                    options.ResponseType = "code";
+                    options.UsePkce = true;
 
+                    options.Scope.Clear();
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
 
                     options.SaveTokens = true;
-                    
                     options.GetClaimsFromUserInfoEndpoint = true;
                 });
         }
