@@ -96,6 +96,22 @@ namespace Movies.API.Data
                     }
                 };
                 moviesContext.Movie.AddRange(movies);
+
+                for (int i = 0; i < 10;)
+                {
+                    i++;
+                    var movie = new Movie
+                    {
+                        Id = 8 + i,
+                        Genre = $"Romance {i}",
+                        Title = $"Forrest Gump {i}",
+                        Rating = $"{i}.{i}",
+                        ImageUrl = "images/src",
+                        ReleaseDate = new DateTime(1994, 5, 5).AddDays(i),
+                        Owner = (i % 2 == 0) ? "bob" : "alice"
+                    };
+                    moviesContext.Movie.Add(movie);
+                }
                 moviesContext.SaveChanges();
             }
         }

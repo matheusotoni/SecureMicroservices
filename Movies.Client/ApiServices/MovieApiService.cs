@@ -1,4 +1,5 @@
-﻿using IdentityModel.Client;
+﻿using IdentityModel;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
@@ -6,6 +7,7 @@ using Movies.Client.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -74,9 +76,17 @@ namespace Movies.Client.ApiServices
 
             response.EnsureSuccessStatusCode();
 
+            var userInfo = await GetUserInfo();
+
+            //create filter using JwtClaimTypes.GivenName
+            var userName = userInfo.UserInfoDictionary.GetValueOrDefault(JwtClaimTypes.GivenName);
+
             var content = await response.Content.ReadAsStringAsync();
             var movieList = JsonConvert.DeserializeObject<List<Movie>>(content);
-            return movieList;
+
+            return movieList.Where(m => m.Owner.ToLower() == userName.ToLower());
+
+
 
             //// way 2
 
